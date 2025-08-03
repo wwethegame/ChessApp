@@ -1,6 +1,8 @@
 using ChessLogicNS;
 using ChessMoveNS;
 using System.ComponentModel;
+using System;
+using System.Collections.Generic;
 
 namespace Chess
 {

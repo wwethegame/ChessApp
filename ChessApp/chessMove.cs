@@ -1,3 +1,6 @@
+using System;
+
+
 using ChessBoardNS;
 
 namespace ChessMoveNS

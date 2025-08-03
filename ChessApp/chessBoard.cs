@@ -1,4 +1,8 @@
+using System;
+using System.Collections.Generic;
+
 namespace ChessBoardNS
+
 {
     enum ChessColor
     {

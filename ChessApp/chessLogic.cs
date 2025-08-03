@@ -1,5 +1,7 @@
 using ChessBoardNS;
 using ChessMoveNS;
+using System;
+using System.Collections.Generic;
 
 namespace ChessLogicNS
 {

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ChessApp (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "ChessApp (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

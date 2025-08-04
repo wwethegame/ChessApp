@@ -1,9 +1,7 @@
-using ChessBoardNS;
-using ChessMoveNS;
 using System;
 using System.Collections.Generic;
 
-namespace ChessLogicNS
+namespace ChessApp.Logic
 {
     public class InvalidMoveException : Exception
     {
@@ -21,7 +19,7 @@ namespace ChessLogicNS
         public ChessBoard board { get; set; }
         public ChessLogic()
         {
-            this.board = new ChessBoard();
+            board = new ChessBoard();
         }
 
         public void makeMove(ChessMove move)
@@ -30,9 +28,9 @@ namespace ChessLogicNS
             {
 
 
-                this.board[move.destination.x, move.destination.y] = this.board[move.origin.x, move.origin.y];
-                this.board[move.origin.x, move.origin.y] = 0;
-                this.board.isItWhitesTurn = !this.board.isItWhitesTurn;
+                board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
+                board[move.origin.x, move.origin.y] = 0;
+                board.isItWhitesTurn = !board.isItWhitesTurn;
 
             }
             else
@@ -42,13 +40,13 @@ namespace ChessLogicNS
         }
         public bool isMoveLegal(ChessMove move)
         {
-            int currentPiece = this.board[move.origin.x, move.origin.y];
+            int currentPiece = board[move.origin.x, move.origin.y];
 
             if (currentPiece == 0)//Origin is empty
             {
                 return false;
             }
-            if ((currentPiece > 0) != this.board.isItWhitesTurn)//Origin piece isn't the same colour as the player whos turn it is.
+            if (currentPiece > 0 != board.isItWhitesTurn)//Origin piece isn't the same colour as the player whos turn it is.
             {
                 return false;
             }

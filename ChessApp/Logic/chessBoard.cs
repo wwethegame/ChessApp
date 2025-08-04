@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ChessBoardNS
+namespace ChessApp.Logic
 
 {
     enum ChessColor
@@ -47,14 +47,14 @@ namespace ChessBoardNS
         }
         public void resetBoard()
         {
-            this.isItWhitesTurn = true;
-            this.boardState = (int[,])startingBoard.Clone();
-            this.hasWhiteKingMoved = false;
-            this.hasBlackKingMoved = false;
+            isItWhitesTurn = true;
+            boardState = (int[,])startingBoard.Clone();
+            hasWhiteKingMoved = false;
+            hasBlackKingMoved = false;
         }
         public void print()
         {
-            if (this.isItWhitesTurn)
+            if (isItWhitesTurn)
             {
                 Console.WriteLine("It's White's turn:");
             }
@@ -62,8 +62,8 @@ namespace ChessBoardNS
             {
                 Console.WriteLine("It's Black's turn:");
             }
-            int rows = this.boardState.GetLength(0);  // Number of rows
-            int columns = this.boardState.GetLength(1);  // Number of columns
+            int rows = boardState.GetLength(0);  // Number of rows
+            int columns = boardState.GetLength(1);  // Number of columns
             Dictionary<int, char> pieceMapping = new Dictionary<int, char>
                 {
                     { 1, 'P' }, { 2, 'N' }, { 3, 'B' }, { 4, 'R' }, { 5, 'Q' }, { 6, 'K' },
@@ -74,7 +74,7 @@ namespace ChessBoardNS
             {
                 for (int x = 0; x < columns; x++)
                 {
-                    Console.Write(pieceMapping[this.boardState[y, x]] + " ");  // Print each element followed by a tab for spacing
+                    Console.Write(pieceMapping[boardState[y, x]] + " ");  // Print each element followed by a tab for spacing
                 }
                 Console.WriteLine();  // Move to the next line after printing each row
             }

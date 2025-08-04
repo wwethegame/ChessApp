@@ -1,13 +1,12 @@
+using ChessApp.Logic;
 using ChessApp.Models;
-using ChessLogicNS;
-using ChessMoveNS;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
-namespace ChessViewModelNS
+namespace ChessApp.Viewmodel
 {
     public class ChessViewModel : INotifyPropertyChanged
     {

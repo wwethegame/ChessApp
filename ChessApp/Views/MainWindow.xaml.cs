@@ -1,4 +1,4 @@
-using ChessViewModelNS;
+using ChessApp.Viewmodel;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

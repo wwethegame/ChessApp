@@ -1,9 +1,6 @@
 using System;
 
-
-using ChessBoardNS;
-
-namespace ChessMoveNS
+namespace ChessApp.Logic
 {
 
     class ChessMove
@@ -17,8 +14,8 @@ namespace ChessMoveNS
                 destinationX >= 0 && destinationX <= 7 &&
                 destinationY >= 0 && destinationY <= 7)
             {
-                this.origin = (originX, originY);
-                this.destination = (destinationX, destinationY);
+                origin = (originX, originY);
+                destination = (destinationX, destinationY);
             }
             else
             {

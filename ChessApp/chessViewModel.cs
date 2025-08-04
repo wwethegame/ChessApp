@@ -1,50 +1,50 @@
+using ChessApp.Models;
 using ChessLogicNS;
 using ChessMoveNS;
-using System.ComponentModel;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
-namespace Chess
+namespace ChessViewModelNS
 {
     public class ChessViewModel : INotifyPropertyChanged
     {
-        private ChessLogic _chessLogic;
-        private int[,] _board;
-        public List<int> Board { get => FlattenBoard(); }
+        public ObservableCollection<Cell> Cells { get; } = new();
+        private ChessLogic _logic = new ChessLogic();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public ChessViewModel()
         {
-            _chessLogic = new ChessLogic();
-            _board = _chessLogic.board.boardState;
+            UpdateBoard();
+            
+        }
 
-            OnPropertyChanged(nameof(Board));
+        private void UpdateBoard()
+        {
+            Cells.Clear();
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    Cells.Add(new Cell
+                    {
+                        Row = y,
+                        Column = x,
+                        Value = _logic.board[x, y].ToString()
+                    });
+                }
+            }
+            OnPropertyChanged(nameof(Cells));
         }
 
         
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
+        private void OnPropertyChanged(string name)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void MakeMove(int fromX, int fromY, int toX, int toY)
-        {
-            _chessLogic.makeMove(new ChessMove(fromX, fromY, toX, toY));
-            OnPropertyChanged(nameof(Board));
-        }
-
-        private List<int> FlattenBoard()
-        {
-            List<int> flattenedBoard = new List<int>();
-            for (int row = 0; row < _board.GetLength(0); row++)
-            {
-                for (int col = 0; col < _board.GetLength(1); col++)
-                {
-                    flattenedBoard.Add(_board[row, col]);
-                }
-            }
-            return flattenedBoard;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace ChessBoardNS
@@ -79,6 +79,26 @@ namespace ChessBoardNS
                 Console.WriteLine();  // Move to the next line after printing each row
             }
             Console.WriteLine();
+        }
+
+        private string GetSymbol(int value)
+        {
+            return value switch
+            {
+                -1 => "♙",   // White Pawn
+                -2 => "♘",
+                -3 => "♗",
+                -4 => "♖",
+                -5 => "♕",
+                -6 => "♔",
+                1 => "♟",  // Black Pawn
+                2 => "♞",
+                3 => "♝",
+                4 => "♜",
+                5 => "♛",
+                6 => "♚",
+                0 => ""
+            };
         }
     }
 }

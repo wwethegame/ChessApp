@@ -6,6 +6,7 @@
     xmlns:local="using:ChessApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:ChessApp.Models"
     mc:Ignorable="d"
     Title="ChessApp">
 
@@ -13,7 +14,30 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
-    <Grid>
+    <Viewbox Stretch="Uniform">
+        <Grid Padding="10" x:Name="RootGrid">
+            <ItemsRepeater ItemsSource="{x:Bind ViewModel.Cells}">
+                <ItemsRepeater.Layout>
+                    <UniformGridLayout MaximumRowsOrColumns="8" />
+                </ItemsRepeater.Layout>
+                <ItemsRepeater.ItemTemplate>
+                    <DataTemplate x:DataType="models:Cell">
+                        <Border
+                        Width="40"
+                        Height="40"
+                        Background="{x:Bind Background}"
+                        Padding="0"
+                        Margin="0">
+                            <TextBlock
+                            Text="{x:Bind Value}"
+                            Foreground="{x:Bind Foreground}"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Center"/>
+                        </Border>
+                    </DataTemplate>
+                </ItemsRepeater.ItemTemplate>
+            </ItemsRepeater>
 
-    </Grid>
+        </Grid>
+    </Viewbox>
 </Window>

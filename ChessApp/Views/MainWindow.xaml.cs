@@ -33,6 +33,7 @@ namespace ChessApp
         public ChessViewModel ViewModel { get; set; }
         public MainWindow()
         {
+
             InitializeComponent();
             IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this); // Assuming 'this' is your Window instance
             var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
@@ -44,6 +45,44 @@ namespace ChessApp
             //RootGrid.DataContext = ViewModel;
 
         }
+        private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            // only move the image if a cell is actually selected
+            
+
+            var rawBoardWidth = RootGrid.ActualWidth;   
+            var rawBoardHeight = RootGrid.ActualHeight;
+
+            // half-width/height of the board in raw units
+            var halfBoardW = rawBoardWidth * 0.5;
+            var halfBoardH = rawBoardHeight * 0.5;
+            
+            
+
+            // get pointer position relative to the Grid
+            var pt = e.GetCurrentPoint(RootGrid).Position;
+
+            // center the 40×40 image under the cursor
+            
+            DraggedTransform.X = pt.X - halfBoardW;
+            DraggedTransform.Y = pt.Y - halfBoardH;
+        }
+
+
+
+        private void Cell_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            var border = sender as Border;
+          
+            border.BorderBrush = new SolidColorBrush(Colors.Yellow); // Glowing color
+        }
+
+        private void Cell_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            var border = sender as Border;
+            border.BorderBrush = border.Background;
+        }
+
 
         private void Cell_Tapped(object sender, TappedRoutedEventArgs e)
         {

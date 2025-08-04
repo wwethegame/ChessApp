@@ -1,5 +1,6 @@
 ﻿using ChessApp.Logic;
 using ChessApp.Models;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
 using System;
@@ -14,7 +15,12 @@ namespace ChessApp.Viewmodel
     {
         public ObservableCollection<Cell> Cells { get; } = new();
         private ChessLogic _logic = new ChessLogic();
-        private Cell _selectedCell = null;
+        public Cell SelectedCell { get; private set; } = null;
+        public Visibility HoverImageVisibility
+        => SelectedCell != null
+           ? Visibility.Visible
+           : Visibility.Collapsed;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChessViewModel()
@@ -71,7 +77,7 @@ namespace ChessApp.Viewmodel
         public void handleClick(Cell clickedCell)
         {
             // 1) First click: nothing selected yet
-            if (_selectedCell == null)
+            if (SelectedCell == null)
             {
 
                 // Don't allow selecting empty cells
@@ -85,11 +91,8 @@ namespace ChessApp.Viewmodel
                 if (isWhitePiece != isWhiteTurn)
                     return;
 
-                _selectedCell = clickedCell;
-                _selectedCell.IsSelected = true;
-                // highlight in UI
-               
-                
+                setSelectedCellPointer(clickedCell);
+
 
                 return;
 
@@ -97,24 +100,20 @@ namespace ChessApp.Viewmodel
 
             // 2) Second click received
             // If user clicked the same cell, deselect and reset
-            if (_selectedCell == clickedCell)
+            if (SelectedCell == clickedCell)
             {
-                _selectedCell.IsSelected = false;
-                _selectedCell = null;
-                
+                removeSelectedCellPointer();
                 return;
             }
 
             // 3) Real move: from _selectedCell → clickedCell
             bool moved = _logic.makeMove(
-                _selectedCell.Column, _selectedCell.Row,
+                SelectedCell.Column, SelectedCell.Row,
                 clickedCell.Column, clickedCell.Row
             );
 
             // 4) Cleanup selection highlight
-            _selectedCell.IsSelected = false;
-            _selectedCell = null;
-
+            removeSelectedCellPointer();
             // 5) If move succeeded, update the board
             if (moved)
             {
@@ -126,6 +125,25 @@ namespace ChessApp.Viewmodel
         private void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        private void removeSelectedCellPointer()
+        {
+            var previouslySelectedCell = SelectedCell;
+            SelectedCell.IsSelected = false;
+
+            SelectedCell = null;
+            OnPropertyChanged(nameof(previouslySelectedCell));
+            OnPropertyChanged(nameof(HoverImageVisibility));
+
+        }
+
+        private void setSelectedCellPointer(Cell clickedCell)
+        {
+
+            SelectedCell = clickedCell;
+            SelectedCell.IsSelected = true;
+            OnPropertyChanged(nameof(SelectedCell));
+            OnPropertyChanged(nameof(HoverImageVisibility));
         }
     }
 }

@@ -75,7 +75,7 @@ namespace ChessApp.Models
         private static SolidColorBrush CreateBrush(byte r, byte g, byte b) =>
         new SolidColorBrush(new Windows.UI.Color { A = 255, R = r, G = g, B = b });
 
-        private static readonly SolidColorBrush LightBrushSelected = CreateBrush(169, 169, 169);
+        private static readonly SolidColorBrush LightBrushSelected = CreateBrush(190, 190, 190);
         private static readonly SolidColorBrush DarkBrushSelected = CreateBrush(105, 105, 105);
 
         public Brush Background =>

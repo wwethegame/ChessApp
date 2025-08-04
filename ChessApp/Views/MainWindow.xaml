@@ -14,8 +14,15 @@
         <MicaBackdrop />
     </Window.SystemBackdrop>
 
+
+    
+
+
     <Viewbox Stretch="Uniform">
-        <Grid Padding="10" x:Name="RootGrid" >
+        <Grid Padding="10" 
+              x:Name="RootGrid" 
+              PointerMoved="RootGrid_PointerMoved">
+
             <ItemsRepeater ItemsSource="{x:Bind ViewModel.Cells}">
                 <ItemsRepeater.Layout>
                     <UniformGridLayout MaximumRowsOrColumns="8" />
@@ -29,13 +36,27 @@
                         Background="{x:Bind Background , Mode=OneWay}"
                         Padding="0"
                         Margin="0"
-                        Tapped="Cell_Tapped">
+                        Tapped="Cell_Tapped"
+                        BorderThickness="2"
+                        BorderBrush="{x:Bind Background , Mode=OneWay}"
+                        PointerEntered="Cell_PointerEntered"
+                        PointerExited="Cell_PointerExited">
                             <Image Source="{x:Bind ImageSource , Mode=OneWay}" Stretch="Uniform"/>
                         </Border>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
-
+            <Image x:Name="DraggedPieceImage"
+       
+                   Width="40" Height="40"
+                   Visibility="{x:Bind ViewModel.HoverImageVisibility,Mode=OneWay}"
+                   Source="{x:Bind ViewModel.SelectedCell.ImageSource,Mode=OneWay}"
+                   IsHitTestVisible="False">
+                <Image.RenderTransform>
+                    <TranslateTransform x:Name="DraggedTransform"/>
+                </Image.RenderTransform>
+            </Image>
+            
         </Grid>
     </Viewbox>
 </Window>

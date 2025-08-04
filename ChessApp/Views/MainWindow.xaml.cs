@@ -18,6 +18,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Gaming.UI;
 using Windows.Graphics;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -47,25 +48,15 @@ namespace ChessApp
         }
         private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            // only move the image if a cell is actually selected
-            
-
-            var rawBoardWidth = RootGrid.ActualWidth;   
-            var rawBoardHeight = RootGrid.ActualHeight;
-
-            // half-width/height of the board in raw units
-            var halfBoardW = rawBoardWidth * 0.5;
-            var halfBoardH = rawBoardHeight * 0.5;
-            
-            
-
             // get pointer position relative to the Grid
             var pt = e.GetCurrentPoint(RootGrid).Position;
-
-            // center the 40×40 image under the cursor
             
-            DraggedTransform.X = pt.X - halfBoardW;
-            DraggedTransform.Y = pt.Y - halfBoardH;
+            // DragPreview.ActualWidth == 36 once the template is applied
+            double half = DragPreview.ActualWidth /2;
+            
+
+            Canvas.SetLeft(DragPreview, pt.X - half);
+            Canvas.SetTop(DragPreview, pt.Y - half);
         }
 
 

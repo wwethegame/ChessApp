@@ -15,11 +15,11 @@
     </Window.SystemBackdrop>
 
 
-    
 
 
-    <Viewbox Stretch="Uniform">
-        <Grid Padding="10" 
+
+    <Viewbox Stretch="Uniform" x:Name="BoardViewbox">
+        <Grid Padding="0" 
               x:Name="RootGrid" 
               PointerMoved="RootGrid_PointerMoved">
 
@@ -46,17 +46,30 @@
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>
             </ItemsRepeater>
-            <Image x:Name="DraggedPieceImage"
-       
-                   Width="40" Height="40"
-                   Visibility="{x:Bind ViewModel.HoverImageVisibility,Mode=OneWay}"
-                   Source="{x:Bind ViewModel.SelectedCell.ImageSource,Mode=OneWay}"
-                   IsHitTestVisible="False">
-                <Image.RenderTransform>
-                    <TranslateTransform x:Name="DraggedTransform"/>
-                </Image.RenderTransform>
-            </Image>
-            
+            <Canvas>
+                <ContentControl
+                    x:Name="DragPreview"
+                    Canvas.ZIndex="100"
+                    IsHitTestVisible="False"
+                    Content="{x:Bind ViewModel.SelectedCell, Mode=OneWay}"
+                    RenderTransformOrigin="0.5,0.5">
+
+                    <!-- The TranslateTransform you already use -->
+                    <ContentControl.RenderTransform>
+                        <TranslateTransform x:Name="DraggedTransform"/>
+                    </ContentControl.RenderTransform>
+
+                    <!-- Only when SelectedCell != null will this template kick in -->
+                    <ContentControl.ContentTemplate>
+                        <DataTemplate x:DataType="models:Cell">
+                            <Image
+                                  Source="{x:Bind ImageSource,Mode=OneWay}"
+                                  Width="36" Height="36" />
+                        </DataTemplate>
+                    </ContentControl.ContentTemplate>
+                </ContentControl>
+            </Canvas>
+
         </Grid>
     </Viewbox>
 </Window>

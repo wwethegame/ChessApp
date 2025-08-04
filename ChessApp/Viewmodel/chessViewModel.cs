@@ -16,11 +16,7 @@ namespace ChessApp.Viewmodel
         public ObservableCollection<Cell> Cells { get; } = new();
         private ChessLogic _logic = new ChessLogic();
         public Cell SelectedCell { get; private set; } = null;
-        public Visibility HoverImageVisibility
-        => SelectedCell != null
-           ? Visibility.Visible
-           : Visibility.Collapsed;
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         public ChessViewModel()
@@ -133,7 +129,7 @@ namespace ChessApp.Viewmodel
 
             SelectedCell = null;
             OnPropertyChanged(nameof(previouslySelectedCell));
-            OnPropertyChanged(nameof(HoverImageVisibility));
+            
 
         }
 
@@ -143,7 +139,7 @@ namespace ChessApp.Viewmodel
             SelectedCell = clickedCell;
             SelectedCell.IsSelected = true;
             OnPropertyChanged(nameof(SelectedCell));
-            OnPropertyChanged(nameof(HoverImageVisibility));
+            
         }
     }
 }

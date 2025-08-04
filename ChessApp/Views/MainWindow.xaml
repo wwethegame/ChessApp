@@ -30,11 +30,7 @@
                         Padding="0"
                         Margin="0"
                         Tapped="Cell_Tapped">
-                            <TextBlock
-                            Text="{x:Bind Value}"
-                            Foreground="{x:Bind Foreground}"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center"/>
+                            <Image Source="{x:Bind ImageSource}" Stretch="Uniform"/>
                         </Border>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>

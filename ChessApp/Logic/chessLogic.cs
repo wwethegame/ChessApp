@@ -3,15 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessApp.Logic
 {
-    public class InvalidMoveException : Exception
-    {
-        public InvalidMoveException() : base("Invalid Move!") { }
-
-        public InvalidMoveException(string message) : base(message) { }
-
-        public InvalidMoveException(string message, Exception innerException)
-            : base(message, innerException) { }
-    }
+    
     class ChessLogic
     {
 
@@ -22,7 +14,7 @@ namespace ChessApp.Logic
             board = new ChessBoard();
         }
 
-        public void makeMove(ChessMove move)
+        public Boolean makeMove(ChessMove move)
         {
             if (isMoveLegal(move))
             {
@@ -31,13 +23,21 @@ namespace ChessApp.Logic
                 board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
                 board[move.origin.x, move.origin.y] = 0;
                 board.isItWhitesTurn = !board.isItWhitesTurn;
-
+                return true;
             }
             else
             {
-                throw new InvalidMoveException();
+                return false;
             }
         }
+
+        public Boolean makeMove(int xOrigin, int yOrigin, int xDestination, int yDestination)
+        {
+            ChessMove move=new ChessMove(xOrigin, yOrigin, xDestination, yDestination);
+            return makeMove(move);
+        }
+
+        
         public bool isMoveLegal(ChessMove move)
         {
             int currentPiece = board[move.origin.x, move.origin.y];

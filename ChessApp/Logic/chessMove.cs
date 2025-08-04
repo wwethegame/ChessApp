@@ -23,7 +23,7 @@ namespace ChessApp.Logic
             }
 
         }
-        public ChessMove(string move, ChessBoard board)
+        public ChessMove(string move, ChessBoard board)//Todo
         {
 
         }

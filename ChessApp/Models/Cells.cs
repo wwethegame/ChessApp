@@ -2,19 +2,33 @@
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ChessApp.Models
 {
-    public class Cell
+    public class Cell : INotifyPropertyChanged
     {
         public int Row { get; init; }
         public int Column { get; init; }
-      
 
-        public int PieceCode { get; set; }
+
+        private int _pieceCode;
+        public int PieceCode
+        {
+            get => _pieceCode;
+            set
+            {
+                if (_pieceCode != value)
+                {
+                    _pieceCode = value;
+                    OnPropertyChanged(nameof(PieceCode));
+                    OnPropertyChanged(nameof(ImageSource));
+                }
+            }
+        }
 
         public string ImageSource => GetImagePath(PieceCode);
         private string GetImagePath(int code)
@@ -39,7 +53,20 @@ namespace ChessApp.Models
         }
 
 
-        public bool IsSelected { get; set; }
+        private bool _isSelected;
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                if (_isSelected != value)
+                {
+                    _isSelected = value;
+                    OnPropertyChanged(nameof(IsSelected));
+                    OnPropertyChanged(nameof(Background));
+                }
+            }
+        }
         // Reusable static brushes to avoid repeated allocation
         private static readonly SolidColorBrush LightBrush = new(Colors.LightGray);
         private static readonly SolidColorBrush DarkBrush = new(Colors.DarkGray);
@@ -60,5 +87,12 @@ namespace ChessApp.Models
             (Row + Column) % 2 == 0
                 ? DarkBrushText
                 : LightBrushText;
+
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        private void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using System.Diagnostics;
 namespace ChessApp.Logic
 
 {
@@ -56,11 +56,11 @@ namespace ChessApp.Logic
         {
             if (isItWhitesTurn)
             {
-                Console.WriteLine("It's White's turn:");
+                Debug.WriteLine("It's White's turn:");
             }
             else
             {
-                Console.WriteLine("It's Black's turn:");
+                Debug.WriteLine("It's Black's turn:");
             }
             int rows = boardState.GetLength(0);  // Number of rows
             int columns = boardState.GetLength(1);  // Number of columns
@@ -74,11 +74,11 @@ namespace ChessApp.Logic
             {
                 for (int x = 0; x < columns; x++)
                 {
-                    Console.Write(pieceMapping[boardState[y, x]] + " ");  // Print each element followed by a tab for spacing
+                    Debug.Write(pieceMapping[boardState[y, x]] + " ");  // Print each element followed by a tab for spacing
                 }
-                Console.WriteLine();  // Move to the next line after printing each row
+                Debug.WriteLine("");  // Move to the next line after printing each row
             }
-            Console.WriteLine();
+            Debug.WriteLine("");
         }
 
         private string GetSymbol(int value)

@@ -26,11 +26,11 @@
                         Width="40"
                         Height="40"
                         Tag="{x:Bind}"
-                        Background="{x:Bind Background}"
+                        Background="{x:Bind Background , Mode=OneWay}"
                         Padding="0"
                         Margin="0"
                         Tapped="Cell_Tapped">
-                            <Image Source="{x:Bind ImageSource}" Stretch="Uniform"/>
+                            <Image Source="{x:Bind ImageSource , Mode=OneWay}" Stretch="Uniform"/>
                         </Border>
                     </DataTemplate>
                 </ItemsRepeater.ItemTemplate>

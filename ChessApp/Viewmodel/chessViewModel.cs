@@ -19,28 +19,39 @@ namespace ChessApp.Viewmodel
 
         public ChessViewModel()
         {
-            UpdateBoard();
-            
-        }
+            InitializeBoard();
 
-        private void UpdateBoard()
+        }
+        private void InitializeBoard()
         {
-            Cells.Clear();
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
                 {
-                    Cells.Add(new Cell
+                    var cell = new Cell
                     {
                         Row = y,
                         Column = x,
-                       
-
                         PieceCode = _logic.board[x, y]
-                    });
+                    };
+                    Cells.Add(cell);
                 }
             }
-            OnPropertyChanged(nameof(Cells));
+        }
+        private void UpdateBoard()
+        {
+            for (int i = 0; i < Cells.Count; i++)
+            {
+                var cell = Cells[i];
+                int newCode = _logic.board[cell.Column, cell.Row];
+                if (cell.PieceCode != newCode)
+                {
+                    cell.PieceCode = newCode;
+                    // Notify change manually if needed
+                    //OnPropertyChanged(nameof(cell.ImageSource));
+                }
+            }
+            //_logic.board.print();
         }
         public void PrintSelections()
         {
@@ -62,6 +73,18 @@ namespace ChessApp.Viewmodel
             // 1) First click: nothing selected yet
             if (_selectedCell == null)
             {
+
+                // Don't allow selecting empty cells
+                if (clickedCell.PieceCode == 0)
+                    return;
+
+                // Don't allow selecting opponent's pieces (assuming white = positive, black = negative)
+                bool isWhiteTurn = _logic.board.isItWhitesTurn; // Add this property to your logic if not there yet
+                bool isWhitePiece = clickedCell.PieceCode > 0;
+
+                if (isWhitePiece != isWhiteTurn)
+                    return;
+
                 _selectedCell = clickedCell;
                 _selectedCell.IsSelected = true;
                 // highlight in UI

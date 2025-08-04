@@ -15,7 +15,7 @@
     </Window.SystemBackdrop>
 
     <Viewbox Stretch="Uniform">
-        <Grid Padding="10" x:Name="RootGrid">
+        <Grid Padding="10" x:Name="RootGrid" >
             <ItemsRepeater ItemsSource="{x:Bind ViewModel.Cells}">
                 <ItemsRepeater.Layout>
                     <UniformGridLayout MaximumRowsOrColumns="8" />

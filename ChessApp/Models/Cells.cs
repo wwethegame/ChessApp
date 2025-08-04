@@ -12,8 +12,7 @@ namespace ChessApp.Models
     {
         public int Row { get; init; }
         public int Column { get; init; }
-        public required string Value { get;  set; }
-
+      
 
         public int PieceCode { get; set; }
 

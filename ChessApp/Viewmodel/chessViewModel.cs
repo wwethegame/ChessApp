@@ -34,7 +34,8 @@ namespace ChessApp.Viewmodel
                     {
                         Row = y,
                         Column = x,
-                        Value = _logic.board[x, y].ToString(),
+                       
+
                         PieceCode = _logic.board[x, y]
                     });
                 }

@@ -12,11 +12,13 @@ namespace ChessApp.Models
     {
         public int Row { get; init; }
         public int Column { get; init; }
-        public string Value { get; init; }
+        public required string Value { get; init; }
 
         // Reusable static brushes to avoid repeated allocation
-        private static readonly SolidColorBrush LightBrush = new(Colors.White);
-        private static readonly SolidColorBrush DarkBrush = new(Colors.Black);
+        private static readonly SolidColorBrush LightBrush = new(Colors.LightGray);
+        private static readonly SolidColorBrush DarkBrush = new(Colors.DarkGray);
+        private static readonly SolidColorBrush LightBrushText = new(Colors.White);
+        private static readonly SolidColorBrush DarkBrushText = new(Colors.Black);
 
         public Brush Background =>
             (Row + Column) % 2 == 0
@@ -25,7 +27,7 @@ namespace ChessApp.Models
 
         public Brush Foreground =>
             (Row + Column) % 2 == 0
-                ? DarkBrush
-                : LightBrush;
+                ? DarkBrushText
+                : LightBrushText;
     }
 }

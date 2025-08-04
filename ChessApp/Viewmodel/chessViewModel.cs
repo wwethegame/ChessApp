@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Diagnostics;
 
 namespace ChessApp.Viewmodel
 {
@@ -39,7 +40,10 @@ namespace ChessApp.Viewmodel
             OnPropertyChanged(nameof(Cells));
         }
 
-        
+        public void handleClick(Cell cell)
+        {
+            Debug.WriteLine($"Column:{cell.Column} Row:{cell.Row}");
+        }
 
         private void OnPropertyChanged(string name)
         {

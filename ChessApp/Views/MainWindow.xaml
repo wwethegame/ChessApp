@@ -25,9 +25,11 @@
                         <Border
                         Width="40"
                         Height="40"
+                        Tag="{x:Bind}"
                         Background="{x:Bind Background}"
                         Padding="0"
-                        Margin="0">
+                        Margin="0"
+                        Tapped="Cell_Tapped">
                             <TextBlock
                             Text="{x:Bind Value}"
                             Foreground="{x:Bind Foreground}"

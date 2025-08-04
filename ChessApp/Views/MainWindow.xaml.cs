@@ -1,3 +1,4 @@
+﻿using ChessApp.Models;
 using ChessApp.Viewmodel;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -10,6 +11,7 @@ using Microsoft.UI.Xaml.Navigation;
 using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -31,12 +33,20 @@ namespace ChessApp
         public MainWindow()
         {
             InitializeComponent();
-            // Create 8�8 chessboard
-            ViewModel = new ChessViewModel();
-            RootGrid.DataContext = ViewModel;
+            // Create 8×8 chessboard
+            this.ViewModel = new ChessViewModel();
+            //RootGrid.DataContext = ViewModel;
         }
-        
-        
+
+        private void Cell_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            
+            var border = (Border)sender;
+            var cell = (Cell)border.Tag;
+            ViewModel.handleClick(cell);
+        }
+      
+
     }
 
   

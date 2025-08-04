@@ -28,8 +28,7 @@ namespace ChessApp
     public partial class App : Application
     {
         private Window? _window;
-        [DllImport("kernel32.dll")]
-        private static extern bool AllocConsole();
+        
         /// <summary>
         /// Initializes the singleton application object.  This is the first line of authored code
         /// executed, and as such is the logical equivalent of main() or WinMain().
@@ -45,7 +44,7 @@ namespace ChessApp
         /// <param name="args">Details about the launch request and process.</param>
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            AllocConsole();
+            
             _window = new MainWindow();
             _window.Activate();
         }

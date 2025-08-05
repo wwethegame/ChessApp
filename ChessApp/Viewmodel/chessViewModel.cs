@@ -20,6 +20,7 @@ namespace ChessApp.Viewmodel
         }
         private void InitializeBoard()
         {
+            Cells.Clear();
             for (int y = 0; y < 8; y++)
             {
                 for (int x = 0; x < 8; x++)
@@ -48,6 +49,17 @@ namespace ChessApp.Viewmodel
                 }
             }
             //_logic.board.print();
+        }
+        public void RestartGame()
+        {
+            if (SelectedCell is not null)
+            {
+                SelectedCell.IsSelected = false;
+                SelectedCell = null;
+            }
+
+            _logic.board.resetBoard();
+            InitializeBoard();
         }
         public void PrintSelections()
         {

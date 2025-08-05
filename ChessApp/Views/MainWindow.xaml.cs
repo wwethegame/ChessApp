@@ -80,7 +80,10 @@ namespace ChessApp
 
             ViewModel.handleClickRelease(cell);
         }
-
+        private void RestartButton_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.RestartGame();
+        }
 
     }
 

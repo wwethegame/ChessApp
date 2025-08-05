@@ -1,13 +1,8 @@
 ﻿using Microsoft.UI;
 using Microsoft.UI.Xaml.Media;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace ChessApp.Models
 {
@@ -59,7 +54,7 @@ namespace ChessApp.Models
         }
         private string GetDraggedImagePath(Boolean isSelected)
         {
-            
+
             if (isSelected)
             {
                 return GetImagePath(PieceCode);
@@ -68,8 +63,8 @@ namespace ChessApp.Models
             {
                 return "ms-appx:///Assets/Chess/empty.svg";
             }
-            
-           
+
+
         }
 
         private bool _isSelected;

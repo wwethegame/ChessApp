@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ChessApp.Logic
 {
-    
+
     class ChessLogic
     {
 
@@ -33,11 +33,11 @@ namespace ChessApp.Logic
 
         public Boolean makeMove(int xOrigin, int yOrigin, int xDestination, int yDestination)
         {
-            ChessMove move=new ChessMove(xOrigin, yOrigin, xDestination, yDestination);
+            ChessMove move = new ChessMove(xOrigin, yOrigin, xDestination, yDestination);
             return makeMove(move);
         }
 
-        
+
         public bool isMoveLegal(ChessMove move)
         {
             int currentPiece = board[move.origin.x, move.origin.y];

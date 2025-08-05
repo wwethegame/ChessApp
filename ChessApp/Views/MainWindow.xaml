@@ -37,8 +37,8 @@
                         Padding="0"
                         Margin="0"
                       
-                        PointerPressed="Cell_Tapped"
-  
+                        PointerPressed="Cell_PointerPressed"
+                        PointerReleased="Cell_PointerReleased"
                         BorderThickness="2"
                         BorderBrush="{x:Bind Background , Mode=OneWay}"
                         PointerEntered="Cell_PointerEntered"

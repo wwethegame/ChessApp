@@ -1,10 +1,5 @@
 ﻿using ChessApp.Logic;
 using ChessApp.Models;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Shapes;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -16,9 +11,8 @@ namespace ChessApp.Viewmodel
         public ObservableCollection<Cell> Cells { get; } = new();
         private ChessLogic _logic = new ChessLogic();
         public Cell SelectedCell { get; private set; } = null;
-        
-        public event PropertyChangedEventHandler PropertyChanged;
 
+        public event PropertyChangedEventHandler PropertyChanged;
         public ChessViewModel()
         {
             InitializeBoard();
@@ -69,7 +63,20 @@ namespace ChessApp.Viewmodel
             }
         }
 
-        
+
+
+        public void handleClickRelease(Cell clickedCell)
+        {
+            if (this.SelectedCell == null)
+            {
+                return;
+            }
+            if (this.SelectedCell == clickedCell)
+            {
+                return;
+            }
+            handleClick(clickedCell);
+        }
         public void handleClick(Cell clickedCell)
         {
             // 1) First click: nothing selected yet
@@ -115,7 +122,7 @@ namespace ChessApp.Viewmodel
             {
                 UpdateBoard();
             }
-            
+
         }
 
         private void OnPropertyChanged(string name)
@@ -130,7 +137,7 @@ namespace ChessApp.Viewmodel
 
             SelectedCell = null;
             OnPropertyChanged(nameof(previouslySelectedCell));
-            
+
 
         }
 
@@ -140,7 +147,7 @@ namespace ChessApp.Viewmodel
             SelectedCell = clickedCell;
             SelectedCell.IsSelected = true;
             OnPropertyChanged(nameof(SelectedCell));
-            
+
         }
     }
 }

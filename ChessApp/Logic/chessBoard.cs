@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 namespace ChessApp.Logic
 
@@ -9,7 +8,7 @@ namespace ChessApp.Logic
         White = 1,
         Black = -1
     }
-     class ChessBoard
+    class ChessBoard
     {
         public (int x, int y, ChessColor color)? enPassant { get; set; }
         public bool isItWhitesTurn { get; set; }

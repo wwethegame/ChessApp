@@ -67,11 +67,11 @@ namespace ChessApp.Viewmodel
 
         public void handleClickRelease(Cell clickedCell)
         {
-            if (this.SelectedCell == null)
+            if (this.SelectedCell is null)
             {
                 return;
             }
-            if (this.SelectedCell == clickedCell)
+            if (ReferenceEquals(this.SelectedCell, clickedCell))
             {
                 return;
             }

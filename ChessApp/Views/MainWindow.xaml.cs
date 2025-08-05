@@ -75,7 +75,7 @@ namespace ChessApp
         }
 
 
-        private void Cell_Tapped(object sender, TappedRoutedEventArgs e)
+        private void Cell_Tapped(object sender, PointerRoutedEventArgs e)
         {
             
             var border = (Border)sender;

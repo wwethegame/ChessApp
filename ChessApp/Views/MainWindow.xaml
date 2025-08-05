@@ -36,7 +36,9 @@
                         Background="{x:Bind Background , Mode=OneWay}"
                         Padding="0"
                         Margin="0"
-                        Tapped="Cell_Tapped"
+                      
+                        PointerPressed="Cell_Tapped"
+  
                         BorderThickness="2"
                         BorderBrush="{x:Bind Background , Mode=OneWay}"
                         PointerEntered="Cell_PointerEntered"

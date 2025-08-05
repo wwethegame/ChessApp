@@ -3,9 +3,11 @@ using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace ChessApp.Models
 {
@@ -31,6 +33,10 @@ namespace ChessApp.Models
         }
 
         public string ImageSource => GetImagePath(PieceCode);
+
+        //Makes it possible to set Image and the dragged image that appears at the cursors location while moving a piece independently.
+        //also needed to fix a bug, that caused a deselection without movement of a piece to not hide the dragged image.
+        public string DraggedImageSource => GetDraggedImagePath(IsSelected);
         private string GetImagePath(int code)
         {
             if (code == 0)
@@ -51,7 +57,20 @@ namespace ChessApp.Models
             };
             return $"ms-appx:///Assets/Chess/{piecePrefix}-{colorSuffix}.svg";
         }
-
+        private string GetDraggedImagePath(Boolean isSelected)
+        {
+            
+            if (isSelected)
+            {
+                return GetImagePath(PieceCode);
+            }
+            else
+            {
+                return "ms-appx:///Assets/Chess/empty.svg";
+            }
+            
+           
+        }
 
         private bool _isSelected;
         public bool IsSelected
@@ -62,6 +81,7 @@ namespace ChessApp.Models
                 if (_isSelected != value)
                 {
                     _isSelected = value;
+                    OnPropertyChanged(nameof(DraggedImageSource));
                     OnPropertyChanged(nameof(IsSelected));
                     OnPropertyChanged(nameof(Background));
                 }
@@ -92,6 +112,7 @@ namespace ChessApp.Models
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
+            Debug.WriteLine($"▶️ Cell: PropertyChanged: {propertyName}");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

@@ -120,6 +120,7 @@ namespace ChessApp.Viewmodel
 
         private void OnPropertyChanged(string name)
         {
+            Debug.WriteLine($"▶️ VM: PropertyChanged: {name}");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
         private void removeSelectedCellPointer()

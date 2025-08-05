@@ -63,7 +63,7 @@
                     <ContentControl.ContentTemplate>
                         <DataTemplate x:DataType="models:Cell">
                             <Image
-                                  Source="{x:Bind ImageSource,Mode=OneWay}"
+                                  Source="{x:Bind DraggedImageSource,Mode=OneWay}"
                                   Width="36" Height="36" />
                         </DataTemplate>
                     </ContentControl.ContentTemplate>

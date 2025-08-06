@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 namespace ChessApp.Logic
 
@@ -51,6 +52,43 @@ namespace ChessApp.Logic
             hasWhiteKingMoved = false;
             hasBlackKingMoved = false;
         }
+
+
+        public (int x, int y) GetKingPosition(ChessColor color)
+        {
+            int targetKing = (int)color * 6; // 6 for White, -6 for Black
+
+            for (int y = 0; y < boardState.GetLength(0); y++)
+            {
+                for (int x = 0; x < boardState.GetLength(1); x++)
+                {
+                    if (boardState[y, x] == targetKing)
+                    {
+                        return (x, y); // Return as soon as we find the King
+                    }
+                }
+            }
+            throw new InvalidOperationException("King not found on the board.");
+
+        }
+
+
+
+        public ChessBoard Clone()
+        {
+            ChessBoard copy = new ChessBoard();
+
+            // Deep copy the board state
+            copy.boardState = (int[,])this.boardState.Clone();
+
+            // Copy other fields
+            copy.isItWhitesTurn = this.isItWhitesTurn;
+            copy.hasWhiteKingMoved = this.hasWhiteKingMoved;
+            copy.hasBlackKingMoved = this.hasBlackKingMoved;
+            copy.enPassant = this.enPassant;
+
+            return copy;
+        }
         public void print()
         {
             if (isItWhitesTurn)
@@ -80,24 +118,6 @@ namespace ChessApp.Logic
             Debug.WriteLine("");
         }
 
-        private string GetSymbol(int value)
-        {
-            return value switch
-            {
-                -1 => "♙",   // White Pawn
-                -2 => "♘",
-                -3 => "♗",
-                -4 => "♖",
-                -5 => "♕",
-                -6 => "♔",
-                1 => "♟",  // Black Pawn
-                2 => "♞",
-                3 => "♝",
-                4 => "♜",
-                5 => "♛",
-                6 => "♚",
-                0 => ""
-            };
-        }
+
     }
 }

@@ -51,6 +51,7 @@ namespace ChessApp.Logic
                 return false;
             }
             List<(int, int)> viableDestinationList = getViableDestinations((move.origin.x, move.origin.y));
+
             if (viableDestinationList.Contains(move.destination))
             {
                 return true;
@@ -189,7 +190,26 @@ namespace ChessApp.Logic
                     throw new Exception("Unrecognized Chess Piece Type while calculating viable Moves!");
 
             }
-            return viableDestinations;
+            // Check if your king is threatened after moving the piece
+            ChessBoard backupBoard = board.Clone();
+            List<(int, int)> safeDestinations = new List<(int x, int y)>(); //Final list with destinations the figure can move to without putting your own king in check
+            foreach ((int x, int y) destination in viableDestinations)
+            {
+
+                board[destination.x, destination.y] = board[coords.x, coords.y];
+                board[coords.x, coords.y] = 0;
+                (int x, int y) kingposition = board.GetKingPosition((ChessColor)pieceColor);
+
+                if (isThreatenedBy(kingposition).Count == 0)
+                {
+                    safeDestinations.Add(destination);
+                }
+                board = backupBoard.Clone();
+
+
+            }
+
+            return safeDestinations;
 
         }
 

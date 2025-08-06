@@ -198,9 +198,9 @@ namespace ChessApp.Logic
 
                 board[destination.x, destination.y] = board[coords.x, coords.y];
                 board[coords.x, coords.y] = 0;
-                (int x, int y) kingposition = board.GetKingPosition((ChessColor)pieceColor);
 
-                if (isThreatenedBy(kingposition).Count == 0)
+
+                if (getThreatsToKing((ChessColor)pieceColor).Count == 0)
                 {
                     safeDestinations.Add(destination);
                 }
@@ -260,8 +260,9 @@ namespace ChessApp.Logic
         }
 
 
-        public List<(int, int)> isThreatenedBy((int x, int y) position)
+        public List<(int, int)> getThreatsToKing(ChessColor color)
         {
+            (int x, int y) position = board.GetKingPosition(color);
             int chessPiece = board[position.x, position.y];
             int pieceColor = Math.Sign(chessPiece);
             List<(int, int)> threateningPieces = new List<(int, int)>();

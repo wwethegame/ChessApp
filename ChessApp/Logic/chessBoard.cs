@@ -14,8 +14,10 @@ namespace ChessApp.Logic
         public (int x, int y, ChessColor color)? enPassant { get; set; }
         public bool isItWhitesTurn { get; set; }
 
-        public bool hasWhiteKingMoved;
-        public bool hasBlackKingMoved;
+
+
+        public Dictionary<(int x, int y), Boolean> castlePiecesMoved;
+
         private static int[,] startingBoard = new int[8, 8] {
             { -4, -2, -3, -5, -6, -3, -2, -4 },  // Black's back row
             { -1, -1, -1, -1, -1, -1, -1, -1 },  // Black pawns
@@ -49,8 +51,15 @@ namespace ChessApp.Logic
         {
             isItWhitesTurn = true;
             boardState = (int[,])startingBoard.Clone();
-            hasWhiteKingMoved = false;
-            hasBlackKingMoved = false;
+            castlePiecesMoved = new Dictionary<(int x, int y), Boolean>
+        {
+            { (0, 0), false }, // left black rook
+            { (7, 0), false }, //right black rook
+            { (0, 7), false }, //left white rook
+            { (7, 7), false }, //right white rook
+            { (4, 0), false }, // black king
+            { (4, 7), false }  //white king
+        };
         }
 
 
@@ -83,8 +92,7 @@ namespace ChessApp.Logic
 
             // Copy other fields
             copy.isItWhitesTurn = this.isItWhitesTurn;
-            copy.hasWhiteKingMoved = this.hasWhiteKingMoved;
-            copy.hasBlackKingMoved = this.hasBlackKingMoved;
+            copy.castlePiecesMoved = new Dictionary<(int x, int y), bool>(this.castlePiecesMoved);
             copy.enPassant = this.enPassant;
 
             return copy;

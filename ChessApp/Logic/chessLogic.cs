@@ -18,11 +18,34 @@ namespace ChessApp.Logic
         {
             if (isMoveLegal(move))
             {
+                if (board.castlePiecesMoved.Keys.Contains(move.origin))
+                {
+                    board.castlePiecesMoved[move.origin] = true;
+                }
+
+                if (board.castlePiecesMoved.Keys.Contains(move.destination))
+                {
+                    board.castlePiecesMoved[move.destination] = true;
+                }
 
 
-                board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
-                board[move.origin.x, move.origin.y] = 0;
-                board.isItWhitesTurn = !board.isItWhitesTurn;
+
+                if (Math.Abs(board[move.origin.x, move.origin.y]) == 6 && Math.Abs(move.origin.x - move.destination.x) == 2)// Check for Castle Move
+                {
+                    //Todo
+                }
+                else
+                {
+                    board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
+                    board[move.origin.x, move.origin.y] = 0;
+                    board.isItWhitesTurn = !board.isItWhitesTurn;
+                }
+
+
+
+
+
+
                 return true;
             }
             else

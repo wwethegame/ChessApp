@@ -2,7 +2,6 @@
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace ChessApp.Models
 {
@@ -107,7 +106,7 @@ namespace ChessApp.Models
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)
         {
-            Debug.WriteLine($"▶️ Cell: PropertyChanged: {propertyName}");
+            //Debug.WriteLine($"▶️ Cell: PropertyChanged: {propertyName}");
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }

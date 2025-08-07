@@ -93,6 +93,7 @@ namespace ChessApp.Logic
             // Copy other fields
             copy.isItWhitesTurn = this.isItWhitesTurn;
             copy.castlePiecesMoved = new Dictionary<(int x, int y), bool>(this.castlePiecesMoved);
+
             copy.enPassant = this.enPassant;
 
             return copy;

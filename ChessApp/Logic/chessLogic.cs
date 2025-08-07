@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace ChessApp.Logic
 {
@@ -32,7 +33,7 @@ namespace ChessApp.Logic
 
                 if (Math.Abs(board[move.origin.x, move.origin.y]) == 6 && Math.Abs(move.origin.x - move.destination.x) == 2)// Check for Castle Move
                 {
-                    //Todo
+                    Debug.WriteLine("Castling!");
                 }
                 else
                 {
@@ -89,6 +90,7 @@ namespace ChessApp.Logic
             int pieceType = Math.Abs(chessPiece);
             List<(int, int)> viableDestinations = new List<(int, int)>();
             (int, int)[] availableDirections;
+            ChessBoard backupBoard = board.Clone();
 
             switch (pieceType)
             {
@@ -207,6 +209,46 @@ namespace ChessApp.Logic
                         }
                     }
 
+                    //Castle movement 
+                    if (board.castlePiecesMoved[board.GetKingPosition((ChessColor)pieceColor)] == false) //if king hasnt moved
+                    {
+                        if (getThreatsToKing((ChessColor)pieceColor).Count == 0)//Cant castle out of check
+                        {
+                            int rank = (pieceColor == -1) ? 0 : (pieceColor == 1 ? 7 : throw new ArgumentException("Error while determening color in castle move check!")); //determining the rank of the castle move
+
+                            if (board.castlePiecesMoved[(0, rank)] == false) //if left rook hasnt moved
+                            {
+                                if (board[1, rank] == 0 && board[2, rank] == 0 && board[3, rank] == 0) //check if fields between king and rook are empty
+                                {
+                                    board[3, rank] = pieceType * pieceColor; //Fields that the king "skipps" cant be threatened
+                                    board[4, rank] = 0;
+                                    if (getThreatsToKing((ChessColor)pieceColor).Count == 0)
+                                    {
+                                        viableDestinations.Add((2, rank));
+                                    }
+                                    board = backupBoard.Clone();
+
+                                }
+
+                            }
+                            if (board.castlePiecesMoved[(7, rank)] == false)// if right rook hasnt moved
+                            {
+                                if (board[5, rank] == 0 && board[6, rank] == 0) //check if fields between king and rook are empty
+                                {
+                                    board[5, rank] = pieceType * pieceColor; //Fields that the king "skipps" cant be threatened
+                                    board[4, rank] = 0;
+                                    if (getThreatsToKing((ChessColor)pieceColor).Count == 0)
+                                    {
+                                        viableDestinations.Add((6, rank));
+                                    }
+                                    board = backupBoard.Clone();
+
+                                }
+                            }
+
+                        }
+                    }
+
                     break;
 
                 default:
@@ -214,13 +256,14 @@ namespace ChessApp.Logic
 
             }
             // Check if your king is threatened after moving the piece
-            ChessBoard backupBoard = board.Clone();
+
             List<(int, int)> safeDestinations = new List<(int x, int y)>(); //Final list with destinations the figure can move to without putting your own king in check
             foreach ((int x, int y) destination in viableDestinations)
             {
 
                 board[destination.x, destination.y] = board[coords.x, coords.y];
                 board[coords.x, coords.y] = 0;
+
 
 
                 if (getThreatsToKing((ChessColor)pieceColor).Count == 0)
@@ -231,6 +274,7 @@ namespace ChessApp.Logic
 
 
             }
+
 
             return safeDestinations;
 

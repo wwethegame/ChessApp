@@ -7,6 +7,7 @@ namespace ChessApp.Models
 {
     public class Cell : INotifyPropertyChanged
     {
+
         public int Row { get; init; }
         public int Column { get; init; }
 
@@ -25,7 +26,19 @@ namespace ChessApp.Models
                 }
             }
         }
-
+        private bool _isViableDestination;
+        public bool IsViableDestination
+        {
+            get => _isViableDestination;
+            set
+            {
+                if (_isViableDestination != value)
+                {
+                    _isViableDestination = value;
+                    OnPropertyChanged(nameof(IsViableDestination));
+                }
+            }
+        }
         public string ImageSource => GetImagePath(PieceCode);
 
         //Makes it possible to set Image and the dragged image that appears at the cursors location while moving a piece independently.
@@ -110,4 +123,5 @@ namespace ChessApp.Models
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
 }

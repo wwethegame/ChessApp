@@ -3,6 +3,7 @@ using ChessApp.Models;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Linq;
 
 namespace ChessApp.Viewmodel
 {
@@ -75,7 +76,21 @@ namespace ChessApp.Viewmodel
             }
         }
 
+        public void highlightViableMoves(Cell selectedCell)
+        {
+            foreach (var cell in Cells)
+                cell.IsViableDestination = false;
 
+            var coords = (selectedCell.Column, selectedCell.Row); // Assuming Column = x, Row = y
+            var destinations = _logic.getViableDestinations(coords);
+
+            foreach (var (x, y) in destinations)
+            {
+                var targetCell = Cells.FirstOrDefault(c => c.Column == x && c.Row == y);
+                if (targetCell != null)
+                    targetCell.IsViableDestination = true;
+            }
+        }
 
         public void handleClickRelease(Cell clickedCell)
         {
@@ -148,6 +163,9 @@ namespace ChessApp.Viewmodel
             SelectedCell.IsSelected = false;
 
             SelectedCell = null;
+
+            foreach (var c in Cells)
+                c.IsViableDestination = false;
             OnPropertyChanged(nameof(previouslySelectedCell));
 
 
@@ -155,7 +173,7 @@ namespace ChessApp.Viewmodel
 
         private void setSelectedCellPointer(Cell clickedCell)
         {
-
+            highlightViableMoves(clickedCell);
             SelectedCell = clickedCell;
             SelectedCell.IsSelected = true;
             OnPropertyChanged(nameof(SelectedCell));

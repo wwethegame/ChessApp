@@ -23,6 +23,7 @@
         Margin="15"
         Stretch="Uniform">
 
+
         <StackPanel
             HorizontalAlignment="Center"
             Orientation="Vertical"
@@ -53,7 +54,19 @@
                                 PointerPressed="Cell_PointerPressed"
                                 PointerReleased="Cell_PointerReleased"
                                 Tag="{x:Bind}">
-                                <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="Uniform" />
+                                <Grid>
+                                    <Image Source="{x:Bind ImageSource, Mode=OneWay}" Stretch="Uniform" />
+
+                                    <!--  Gray dot for viable move destination  -->
+                                    <Ellipse
+                                        Width="10"
+                                        Height="10"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Fill="Gray"
+                                        Opacity="0.6"
+                                        Visibility="{x:Bind IsViableDestination, Mode=OneWay}" />
+                                </Grid>
                             </Border>
                         </DataTemplate>
                     </ItemsRepeater.ItemTemplate>

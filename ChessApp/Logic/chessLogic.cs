@@ -17,7 +17,33 @@ namespace ChessApp.Logic
         public Boolean makeMove(ChessMove move)
         {
             if (isMoveLegal(move))
+
+
+
             {
+                //En Passant Logic
+                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && move.destination == board.enPassant?.coords)
+                {
+                    board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
+                    board[move.origin.x, move.origin.y] = 0;
+
+                    if (board.enPassant is { coords: var c, color: var col })
+                    {
+                        board[c.x, c.y - Math.Sign((int)col)] = 0;
+                    }
+
+                    board.isItWhitesTurn = !board.isItWhitesTurn;
+                    board.enPassant = null;
+                    return true;
+                }
+                board.enPassant = null;
+
+                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && Math.Abs(move.origin.y - move.destination.y) == 2)
+                {
+                    board.enPassant = ((move.destination.x, move.destination.y + Math.Sign(board[move.origin.x, move.origin.y])), (ChessColor)Math.Sign(board[move.origin.x, move.origin.y]));
+                }
+
+                //King Logic
                 if (board.castlePiecesMoved.Keys.Contains(move.origin))
                 {
                     board.castlePiecesMoved[move.origin] = true;
@@ -109,11 +135,11 @@ namespace ChessApp.Logic
                     if (board.enPassant?.color == (ChessColor)(-pieceColor))//Color check should be unnecessary... but better save then sorry i guess
                     {
                         if (
-                            board.enPassant?.y == coords.y + pawnDirection &&
-                            Math.Abs((int)board.enPassant?.x - coords.x) == 1
+                            board.enPassant?.coords.y == coords.y + pawnDirection &&
+                            Math.Abs((int)board.enPassant?.coords.x - coords.x) == 1
                             )
                         {
-                            viableDestinations.Add(((int)board.enPassant?.x, (int)board.enPassant?.y));
+                            viableDestinations.Add(((int)board.enPassant?.coords.x, (int)board.enPassant?.coords.y));
                         }
                     }
                     //Double Move check

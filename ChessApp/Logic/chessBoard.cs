@@ -11,7 +11,7 @@ namespace ChessApp.Logic
     }
     class ChessBoard
     {
-        public (int x, int y, ChessColor color)? enPassant { get; set; }
+        public ((int x, int y) coords, ChessColor color)? enPassant { get; set; }
         public bool isItWhitesTurn { get; set; }
 
 

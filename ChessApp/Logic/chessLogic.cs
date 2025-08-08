@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace ChessApp.Logic
 {
@@ -33,7 +32,14 @@ namespace ChessApp.Logic
 
                 if (Math.Abs(board[move.origin.x, move.origin.y]) == 6 && Math.Abs(move.origin.x - move.destination.x) == 2)// Check for Castle Move
                 {
-                    Debug.WriteLine("Castling!");
+                    int rookX = move.destination.x - move.origin.x > 0 ? 7 : 0;
+                    int rookXdest = move.destination.x - move.origin.x > 0 ? 5 : 3;
+                    int rookY = move.origin.y;
+                    board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
+                    board[rookXdest, rookY] = board[rookX, rookY];
+                    board[move.origin.x, move.origin.y] = 0;
+                    board[rookX, rookY] = 0;
+                    board.isItWhitesTurn = !board.isItWhitesTurn;
                 }
                 else
                 {

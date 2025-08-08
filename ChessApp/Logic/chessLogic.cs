@@ -14,6 +14,33 @@ namespace ChessApp.Logic
             board = new ChessBoard();
         }
 
+        /// <summary>
+        /// Returns 1 if white won, -1 if Black won, 0 if its a draw and null if its still not decided.
+        /// </summary>
+        public int? getWinner() //
+        {
+            int currentPlayer = (board.isItWhitesTurn) ? 1 : -1;
+            for (int y = 0; y < 8; y++)
+            {
+                for (int x = 0; x < 8; x++)
+                {
+                    if (Math.Sign(board[x, y]) == currentPlayer)
+                    {
+                        var availableMoves = getViableDestinations((x, y));
+                        if (availableMoves.Count > 0)
+                        {
+                            return null;
+                        }
+                    }
+
+                }
+            }
+            if (getThreatsToKing((ChessColor)currentPlayer).Count > 0)
+            {
+                return -currentPlayer;
+            }
+            return 0;
+        }
         public Boolean makeMove(ChessMove move)
         {
             if (isMoveLegal(move))
@@ -22,7 +49,7 @@ namespace ChessApp.Logic
 
             {
                 //En Passant Logic
-                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && move.destination == board.enPassant?.coords)
+                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && move.destination == board.enPassant?.coords) //Make En Passant capture
                 {
                     board[move.destination.x, move.destination.y] = board[move.origin.x, move.origin.y];
                     board[move.origin.x, move.origin.y] = 0;
@@ -38,7 +65,7 @@ namespace ChessApp.Logic
                 }
                 board.enPassant = null;
 
-                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && Math.Abs(move.origin.y - move.destination.y) == 2)
+                if (Math.Abs(board[move.origin.x, move.origin.y]) == 1 && Math.Abs(move.origin.y - move.destination.y) == 2) // Make double Pawn move and mark field as en passantable
                 {
                     board.enPassant = ((move.destination.x,
                         move.destination.y + Math.Sign(board[move.origin.x, move.origin.y])),

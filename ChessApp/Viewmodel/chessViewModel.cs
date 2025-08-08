@@ -11,6 +11,7 @@ namespace ChessApp.Viewmodel
     {
         public ObservableCollection<Cell> Cells { get; } = new();
         private ChessLogic _logic = new ChessLogic();
+        public string GameStatus => DescribeResult(_logic.getWinner());
         public Cell SelectedCell { get; private set; } = null;
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -19,6 +20,13 @@ namespace ChessApp.Viewmodel
             InitializeBoard();
 
         }
+        string DescribeResult(int? result) => result switch
+        {
+            1 => "White wins",
+            -1 => "Black wins",
+            0 => "Draw",
+            null => "Game in progress"
+        };
         private void InitializeBoard()
         {
             Cells.Clear();
@@ -48,6 +56,12 @@ namespace ChessApp.Viewmodel
                     // Notify change manually if needed
                     //OnPropertyChanged(nameof(cell.ImageSource));
                 }
+            }
+            OnPropertyChanged(nameof(GameStatus));
+            if (_logic.getWinner() != null)
+            {
+                // Optionally trigger a popup, sound, or visual cue
+                Debug.WriteLine($"Game Over: {GameStatus}");
             }
             //_logic.board.print();
         }

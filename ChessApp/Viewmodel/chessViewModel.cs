@@ -9,7 +9,7 @@ namespace ChessApp.Viewmodel
 {
     public class ChessViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Cell> Cells { get; } = new();
+        public ObservableCollection<Cell> Cells { get; } = new ObservableCollection<Cell>();
         private ChessLogic _logic = new ChessLogic();
         public string GameStatus => DescribeResult(_logic.getWinner());
         public Cell? SelectedCell { get; private set; } = null;

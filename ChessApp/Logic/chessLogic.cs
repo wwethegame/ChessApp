@@ -270,12 +270,16 @@ namespace ChessApp.Logic
                         }
                     }
 
+
                     //Castle movement 
-                    if (board.castlePiecesMoved[board.GetKingPosition((ChessColor)pieceColor)] == false) //if king hasnt moved
+
+                    int rank = (pieceColor == -1) ? 0 : (pieceColor == 1 ? 7 : throw new ArgumentException("Error while determening color in castle move check!")); //determining the rank of the castle move
+
+                    if (board.castlePiecesMoved[(4, rank)] == false) //if king hasnt moved
                     {
                         if (getThreatsToKing((ChessColor)pieceColor).Count == 0)//Cant castle out of check
                         {
-                            int rank = (pieceColor == -1) ? 0 : (pieceColor == 1 ? 7 : throw new ArgumentException("Error while determening color in castle move check!")); //determining the rank of the castle move
+
 
                             if (board.castlePiecesMoved[(0, rank)] == false) //if left rook hasnt moved
                             {

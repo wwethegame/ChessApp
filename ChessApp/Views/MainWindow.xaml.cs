@@ -24,16 +24,16 @@ namespace ChessApp
         public ChessViewModel ViewModel { get; set; }
         public MainWindow()
         {
+            this.ViewModel = new ChessViewModel();
 
 
-            InitializeComponent();
             IntPtr hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this); // Assuming 'this' is your Window instance
             var windowId = Win32Interop.GetWindowIdFromWindow(hwnd);
 
             AppWindow appWindow = AppWindow.GetFromWindowId(windowId);
             appWindow.Resize(new SizeInt32(1000, 1000)); // Set width to 800 pixels and height to 600 pixels
-            // Create 8×8 chessboard
-            this.ViewModel = new ChessViewModel();
+                                                         // Create 8×8 chessboard
+            InitializeComponent();
             //RootGrid.DataContext = ViewModel;
 
         }

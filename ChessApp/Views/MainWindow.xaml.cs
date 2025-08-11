@@ -1,6 +1,7 @@
 ﻿using ChessApp.Models;
 using ChessApp.Viewmodel;
 using Microsoft.UI;
+using Microsoft.UI.Input;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -19,6 +20,7 @@ namespace ChessApp
     /// </summary>
     public sealed partial class MainWindow : Window
     {
+
         public ChessViewModel ViewModel { get; set; }
         public MainWindow()
         {
@@ -66,19 +68,29 @@ namespace ChessApp
 
         private void Cell_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            var point = e.GetCurrentPoint((UIElement)sender);
+            if (point.Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonPressed)
+            {
 
-            var border = (Border)sender;
-            var cell = (Cell)border.Tag;
-            ViewModel.handleClick(cell);
+                var border = (Border)sender;
+                var cell = (Cell)border.Tag;
+                ViewModel.handleClick(cell);
+            }
+
         }
 
         private void Cell_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            var point = e.GetCurrentPoint((UIElement)sender);
+            if (point.Properties.PointerUpdateKind == PointerUpdateKind.LeftButtonReleased)
+            {
 
-            var border = (Border)sender;
-            var cell = (Cell)border.Tag;
+                var border = (Border)sender;
+                var cell = (Cell)border.Tag;
 
-            ViewModel.handleClickRelease(cell);
+                ViewModel.handleClickRelease(cell);
+            }
+
         }
         private void RestartButton_Click(object sender, RoutedEventArgs e)
         {

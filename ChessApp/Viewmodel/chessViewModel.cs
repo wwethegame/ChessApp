@@ -12,13 +12,18 @@ namespace ChessApp.Viewmodel
         public ObservableCollection<Cell> Cells { get; } = new ObservableCollection<Cell>();
         private ChessLogic _logic = new ChessLogic();
         public string GameStatus => DescribeResult(_logic.getWinner());
+
+        public bool GameInProgress => _logic.getWinner() != null;
+
+
+
         public Cell? SelectedCell { get; private set; } = null;
 
         public event PropertyChangedEventHandler PropertyChanged;
         public ChessViewModel()
         {
             InitializeBoard();
-
+            Debug.WriteLine($"Game Started!");
         }
         string DescribeResult(int? result) => result switch
         {
@@ -58,9 +63,11 @@ namespace ChessApp.Viewmodel
                 }
             }
             OnPropertyChanged(nameof(GameStatus));
+            OnPropertyChanged(nameof(GameInProgress));
+
             if (_logic.getWinner() != null)
             {
-                // Optionally trigger a popup, sound, or visual cue
+                // Optionally trigger a popup, sound, or visual queue
                 Debug.WriteLine($"Game Over: {GameStatus}");
             }
             //_logic.board.print();
@@ -75,6 +82,8 @@ namespace ChessApp.Viewmodel
 
             _logic.board.resetBoard();
             InitializeBoard();
+            OnPropertyChanged(nameof(GameStatus));
+            OnPropertyChanged(nameof(GameInProgress));
         }
         public void PrintSelections()
         {

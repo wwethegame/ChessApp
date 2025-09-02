@@ -95,7 +95,16 @@
                         </ContentControl.ContentTemplate>
                     </ContentControl>
                 </Canvas>
-
+                <TextBlock
+                    Padding="40"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="48"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="{x:Bind ViewModel.GameStatus, Mode=OneWay}"
+                    TextAlignment="Center"
+                    Visibility="{x:Bind ViewModel.GameInProgress, Mode=OneWay}" />
             </Grid>
             <Button
                 x:Name="RestartButton"

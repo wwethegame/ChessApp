@@ -137,6 +137,7 @@ namespace ChessApp.Logic
             }
             List<(int, int)> viableDestinationList = getViableDestinations((move.origin.x, move.origin.y));
 
+
             if (viableDestinationList.Contains(move.destination))
             {
                 return true;
@@ -320,6 +321,8 @@ namespace ChessApp.Logic
                     throw new Exception("Unrecognized Chess Piece Type while calculating viable Moves!");
 
             }
+
+
             // Check if your king is threatened after moving the piece
 
             List<(int, int)> safeDestinations = new List<(int x, int y)>(); //Final list with destinations the figure can move to without putting your own king in check
@@ -329,9 +332,9 @@ namespace ChessApp.Logic
                 board[destination.x, destination.y] = board[coords.x, coords.y];
                 board[coords.x, coords.y] = 0;
 
+                List<(int, int)> threatsToKing = getThreatsToKing((ChessColor)pieceColor);
 
-
-                if (getThreatsToKing((ChessColor)pieceColor).Count == 0)
+                if (threatsToKing.Count == 0)
                 {
                     safeDestinations.Add(destination);
                 }
@@ -426,10 +429,13 @@ namespace ChessApp.Logic
                         break;
                     }
 
-                    if (Math.Sign(currentExaminatedFigure) == -pieceColor &&
-                        (Math.Abs(currentExaminatedFigure) == 4 || Math.Abs(currentExaminatedFigure) == 5))
+                    if (Math.Sign(currentExaminatedFigure) == -pieceColor)
                     {
-                        threateningPieces.Add((currentExaminatedFieldX, currentExaminatedFieldY));
+                        if (Math.Abs(currentExaminatedFigure) == 4 || Math.Abs(currentExaminatedFigure) == 5)
+                        {
+                            threateningPieces.Add((currentExaminatedFieldX, currentExaminatedFieldY));
+
+                        }
                         break;
                     }
                 }
@@ -463,12 +469,18 @@ namespace ChessApp.Logic
                         break;
                     }
 
-                    if (Math.Sign(currentExaminatedFigure) == -pieceColor &&
-                        (Math.Abs(currentExaminatedFigure) == 3 || Math.Abs(currentExaminatedFigure) == 5))
+
+
+                    if (Math.Sign(currentExaminatedFigure) == -pieceColor)
                     {
-                        threateningPieces.Add((currentExaminatedFieldX, currentExaminatedFieldY));
+                        if (Math.Abs(currentExaminatedFigure) == 3 || Math.Abs(currentExaminatedFigure) == 5)
+                        {
+                            threateningPieces.Add((currentExaminatedFieldX, currentExaminatedFieldY));
+
+                        }
                         break;
                     }
+
                 }
 
             }
@@ -494,20 +506,24 @@ namespace ChessApp.Logic
                     }
                 }
             }
+
             //Checking for Pawns
             int pawnDirection = -pieceColor;
             if (IsWithinBoardBounds((position.x - 1, position.y + pawnDirection)) &&
-                        Math.Sign(board[position.x - 1, position.y + pawnDirection]) == -pieceColor)
+                        Math.Sign(board[position.x - 1, position.y + pawnDirection]) == -pieceColor &&
+                        Math.Abs(board[position.x - 1, position.y + pawnDirection]) == 1)
             {
+
                 threateningPieces.Add((position.x - 1, position.y + pawnDirection));
             }
             if (IsWithinBoardBounds((position.x + 1, position.y + pawnDirection)) &&
-                Math.Sign(board[position.x + 1, position.y + pawnDirection]) == -pieceColor)
+                Math.Sign(board[position.x + 1, position.y + pawnDirection]) == -pieceColor &&
+                Math.Abs(board[position.x + 1, position.y + pawnDirection]) == 1)
             {
+
                 threateningPieces.Add((position.x + 1, position.y + pawnDirection));
             }
-            //Checking for EnPassante
-            //ToDo
+
 
 
             return threateningPieces;
